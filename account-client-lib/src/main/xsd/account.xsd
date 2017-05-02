@@ -1,0 +1,45 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:tns="http://client.micro.joe/account" targetNamespace="http://client.micro.joe/account"
+	elementFormDefault="qualified" jaxb:version="2.0">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:javaType name="java.util.Calendar" xmlType="xs:date"
+					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
+					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:complexType name="AccountDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="accountIdentifier" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AccountDtoList">
+		<xs:sequence>
+			<xs:element name="accounts" type="tns:AccountDto" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="AccountRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accountIdentifier" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AccountResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="account" type="tns:AccountDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

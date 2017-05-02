@@ -1,13 +1,51 @@
+# .gitignore - Define file extensions to exclude from #
+# the repository                                      #
+#######################################################
+
+# Compiled source #
+###################
+*.com
 *.class
+*.dll
+*.exe
+*.o
+*.so
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Eclipse project files #
+#########################
+.classpath
+.project
+.settings
 
-# Package Files #
+# Logs #
+########
+*.log
+
+# Maven #
+#########
+/target
+
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+#*.7z
+#*.dmg
+#*.gz
+#*.iso
 *.jar
-*.war
-*.ear
+#*.rar
+.tar
+*.zip
+.war
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Databases #
+#############
+#*.sql
+#*.sqlite
+
+
+/build/
 hs_err_pid*
 /target/
