@@ -1,0 +1,92 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:tns="http://client.micro.joe/reference"
+	targetNamespace="http://client.micro.joe/reference" elementFormDefault="qualified"
+	jaxb:version="2.0">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:javaType name="java.util.Calendar" xmlType="xs:date"
+					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
+					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:complexType name="CountryDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="code" type="xs:string" />
+			<xs:element name="name" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="CountryRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="code" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CountryResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="country" type="tns:CountryDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CountriesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="countries" type="tns:CountryDto"
+					maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="StateDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="code" type="xs:string" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="countryCode" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="StateRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="code" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="StateResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="state" type="tns:StateDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="StatesByCountryRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="countryCode" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="StatesByCountryResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="states" type="tns:StateDto"
+					maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

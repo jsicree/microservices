@@ -16,25 +16,52 @@
 	<xs:complexType name="AccountDto">
 		<xs:sequence>
 			<xs:element name="id" type="xs:long" />
-			<xs:element name="accountIdentifier" type="xs:string" />
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+			<xs:element name="billingAddress" type="tns:AddressDto" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="AccountDtoList">
+	<xs:complexType name="AddressDto">
 		<xs:sequence>
-			<xs:element name="accounts" type="tns:AccountDto" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="primaryAddressLine" type="xs:string" />
+			<xs:element name="secondaryAddressLine" type="xs:string" />
+			<xs:element name="city" type="xs:string" />
+			<xs:element name="state" type="xs:string" />
+			<xs:element name="zipCode" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:element name="AccountRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="accountIdentifier" type="xs:string" />
+				<xs:element name="email" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
 	<xs:element name="AccountResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="account" type="tns:AccountDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CreateAccountRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+			<xs:element name="billingAddress" type="tns:AddressDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CreateAccountResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="account" type="tns:AccountDto" />

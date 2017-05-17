@@ -2,17 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>joe.micro</groupId>
-	<artifactId>account-microservice</artifactId>
+	<artifactId>reference-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Account Microservice</name>
-
+	<name>Reference Data Microservice</name>
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-parent</artifactId>
 		<version>Brixton.RELEASE</version>
-		<!-- <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
-			<version>1.5.3.RELEASE</version> -->
 	</parent>
 
 	<properties>
@@ -30,15 +27,15 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+<!--
+ 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+ -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
- 		<dependency>
-			<groupId>joe.micro</groupId>
-			<artifactId>account-client-lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
  		<dependency>
@@ -52,10 +49,8 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 		</dependency>
-
 	</dependencies>
-
-
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -64,5 +59,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

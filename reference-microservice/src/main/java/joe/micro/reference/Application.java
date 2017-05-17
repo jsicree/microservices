@@ -1,15 +1,11 @@
-package joe.micro.account;
+package joe.micro.reference;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-
-import joe.micro.account.service.AccountService;
-import joe.micro.account.service.impl.AccountServiceImpl;
 
 @Configuration
 @EnableAutoConfiguration
@@ -18,13 +14,13 @@ import joe.micro.account.service.impl.AccountServiceImpl;
 @PropertySource({"classpath:application.properties"})
 public class Application {
 
-	@Bean
-    AccountService getAccountService() {
-    	return new AccountServiceImpl();
-    }
+//	@Bean
+//    ReferenceDataService getReferenceDataService() {
+//    	return new ReferenceDataServiceImpl();
+//    }
 
     public static void main(String[] args) throws Exception {
-    	System.setProperty("spring.config.name", "accounts-server");
+    	System.setProperty("spring.config.name", "reference-server");
         SpringApplication.run(Application.class, args);
     }
 	    	

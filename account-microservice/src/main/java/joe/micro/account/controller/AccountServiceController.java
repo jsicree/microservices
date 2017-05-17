@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import joe.micro.account.domain.Account;
+import joe.micro.account.domain.Address;
 import joe.micro.account.service.AccountService;
+import joe.micro.account.service.AccountServiceException;
 import joe.micro.client.account.AccountDto;
 import joe.micro.client.account.AccountRequest;
 import joe.micro.client.account.AccountResponse;
+import joe.micro.client.account.CreateAccountRequest;
+import joe.micro.client.account.CreateAccountResponse;
 
 @RestController
 @RequestMapping("api/account")
@@ -27,35 +31,61 @@ public class AccountServiceController {
 	public AccountResponse getAccount(@RequestBody AccountRequest request) {
 		AccountResponse response = new AccountResponse();
 		
-		log.warn("accountId = " + request.getAccountIdentifier());
-		Account account = accountService.getAccountByIdentifier(request.getAccountIdentifier());
-		AccountDto dto = null;
-		if (account != null) {
- 			dto = new AccountDto();
-			dto.setId(account.getId());
-			dto.setAccountIdentifier(account.getAccountIdentifier());				
+		log.warn("Looging for account with email " + request.getEmail());
+		Account account;
+		try {
+			account = accountService.getAccountByEmail(request.getEmail());
+			AccountDto dto = null;
+			if (account != null) {
+	 			dto = new AccountDto();
+				dto.setId(account.getId());
+				dto.setFirstName(account.getFirstName());				
+				dto.setLastName(account.getLastName());
+				dto.setEmail(account.getEmail());
+			}
+			response.setAccount(dto);
+		} catch (AccountServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		response.setAccount(dto);
 		return response;
 	}
 
 	@RequestMapping(value = "/createAccount", method = RequestMethod.POST, produces = "application/json")
-	public AccountResponse createAccount(@RequestBody AccountRequest request) {
-		AccountResponse response = new AccountResponse();
+	public CreateAccountResponse createAccount(@RequestBody CreateAccountRequest request) {
+		CreateAccountResponse response = new CreateAccountResponse();
 		
-		log.info("accountId = " + request.getAccountIdentifier());
 		AccountDto dto = null;
-		if (accountService.getAccountByIdentifier(request.getAccountIdentifier()) == null) {
-			Account account = accountService.createAccount(request.getAccountIdentifier());
-			if (account != null) {
-	 			dto = new AccountDto();
-				dto.setId(account.getId());
-				dto.setAccountIdentifier(account.getAccountIdentifier());				
+		try {
+			if (accountService.getAccountByEmail(request.getEmail()) == null) {
+				log.info("Creating account with email = " + request.getEmail());
+
+				Address billingAddress = null;
+				if (request.getBillingAddress() != null) {
+					billingAddress = new Address();
+					billingAddress.setPrimaryAddressLine(request.getBillingAddress().getPrimaryAddressLine());
+					billingAddress.setSecondaryAddressLine(request.getBillingAddress().getSecondaryAddressLine());
+					billingAddress.setCityName(request.getBillingAddress().getCity());
+					billingAddress.setState(request.getBillingAddress().getState());
+					billingAddress.setZipCode(request.getBillingAddress().getZipCode());
+				}
+				Account account = accountService.createAccount(request.getFirstName(), request.getLastName(), request.getEmail(), billingAddress);
+				
+				if (account != null) {
+		 			dto = new AccountDto();
+					dto.setId(account.getId());
+					dto.setFirstName(account.getFirstName());				
+					dto.setLastName(account.getLastName());
+					dto.setEmail(account.getEmail());
+				}
+				response.setAccount(dto);
+			} else {
+				log.warn("Account with email " + request.getEmail() + " already exists.");
 			}
-		} else {
-			log.warn("Account with accountIdentifier " + request.getAccountIdentifier() + " already exists.");
+		} catch (AccountServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		response.setAccount(dto);
 		return response;
 	}
 	

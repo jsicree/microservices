@@ -1,29 +1,50 @@
 package joe.micro.account.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-@Entity
+@Entity(name="ACCOUNT")
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column(unique=true)
-	private String accountIdentifier;
+
+	@Column(name = "EMAIL", unique = true)
+	private String email;
+
+	@Column(name = "FIRST_NAME")
+	private String firstName;
+
+	@Column(name = "LAST_NAME")
+	private String lastName;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "BILLING_ADDRESS_ID")
+	private Address billingAddress;
+
+	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy =
+	// "customer")
+	// private Collection<Address> addresses = new ArrayList<Address>();
 
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Account(String accountIdentifier) {
+	public Account(Long id, String email, String firstName, String lastName, Address billingAddress) {
 		super();
-		this.accountIdentifier = accountIdentifier;
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.billingAddress = billingAddress;
 	}
 
 	public Long getId() {
@@ -34,43 +55,36 @@ public class Account {
 		this.id = id;
 	}
 
-	public String getAccountIdentifier() {
-		return accountIdentifier;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setAccountIdentifier(String accountIdentifier) {
-		this.accountIdentifier = accountIdentifier;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((accountIdentifier == null) ? 0 : accountIdentifier.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public String getLastName() {
+		return lastName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Account other = (Account) obj;
-		if (accountIdentifier == null) {
-			if (other.accountIdentifier != null)
-				return false;
-		} else if (!accountIdentifier.equals(other.accountIdentifier))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Address getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
 	}
 
 	@Override
@@ -78,8 +92,14 @@ public class Account {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Account [id=");
 		builder.append(id);
-		builder.append(", accountIdentifier=");
-		builder.append(accountIdentifier);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", billingAddress=");
+		builder.append(billingAddress);
 		builder.append("]");
 		return builder.toString();
 	}

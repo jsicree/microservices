@@ -17,6 +17,10 @@
 .project
 .settings
 
+# Properties files #
+####################
+*.properties
+
 # Logs #
 ########
 *.log
