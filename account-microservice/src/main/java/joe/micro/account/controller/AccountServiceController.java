@@ -14,8 +14,10 @@ import joe.micro.account.service.AccountServiceException;
 import joe.micro.client.account.AccountDto;
 import joe.micro.client.account.AccountRequest;
 import joe.micro.client.account.AccountResponse;
+import joe.micro.client.account.AddressDto;
 import joe.micro.client.account.CreateAccountRequest;
 import joe.micro.client.account.CreateAccountResponse;
+import joe.micro.client.account.RequestStatus;
 
 @RestController
 @RequestMapping("api/account")
@@ -31,7 +33,7 @@ public class AccountServiceController {
 	public AccountResponse getAccount(@RequestBody AccountRequest request) {
 		AccountResponse response = new AccountResponse();
 		
-		log.warn("Looging for account with email " + request.getEmail());
+		log.info("Looking for account with email " + request.getEmail());
 		Account account;
 		try {
 			account = accountService.getAccountByEmail(request.getEmail());
@@ -42,10 +44,21 @@ public class AccountServiceController {
 				dto.setFirstName(account.getFirstName());				
 				dto.setLastName(account.getLastName());
 				dto.setEmail(account.getEmail());
+				if (account.getBillingAddress() != null) {
+					AddressDto addr = new AddressDto();
+					addr.setPrimaryAddressLine(account.getBillingAddress().getPrimaryAddressLine());
+					addr.setSecondaryAddressLine(account.getBillingAddress().getSecondaryAddressLine());
+					addr.setCity(account.getBillingAddress().getCityName());
+					addr.setState(account.getBillingAddress().getState());
+					addr.setZipCode(account.getBillingAddress().getZipCode());
+					dto.setBillingAddress(addr);
+				}				
 			}
 			response.setAccount(dto);
+			response.setStatus(RequestStatus.OK);
 		} catch (AccountServiceException e) {
-			// TODO Auto-generated catch block
+			response.setStatus(RequestStatus.ERROR);
+			response.setMessage(e.getMessage());
 			e.printStackTrace();
 		}
 		return response;
@@ -69,22 +82,39 @@ public class AccountServiceController {
 					billingAddress.setState(request.getBillingAddress().getState());
 					billingAddress.setZipCode(request.getBillingAddress().getZipCode());
 				}
-				Account account = accountService.createAccount(request.getFirstName(), request.getLastName(), request.getEmail(), billingAddress);
-				
-				if (account != null) {
-		 			dto = new AccountDto();
-					dto.setId(account.getId());
-					dto.setFirstName(account.getFirstName());				
-					dto.setLastName(account.getLastName());
-					dto.setEmail(account.getEmail());
+				try {
+					Account account = accountService.createAccount(request.getFirstName(), request.getLastName(), request.getEmail(), billingAddress);					
+					if (account != null) {
+			 			dto = new AccountDto();
+						dto.setId(account.getId());
+						dto.setFirstName(account.getFirstName());				
+						dto.setLastName(account.getLastName());
+						dto.setEmail(account.getEmail());
+						if (account.getBillingAddress() != null) {
+							AddressDto addr = new AddressDto();
+							addr.setPrimaryAddressLine(account.getBillingAddress().getPrimaryAddressLine());
+							addr.setSecondaryAddressLine(account.getBillingAddress().getSecondaryAddressLine());
+							addr.setCity(account.getBillingAddress().getCityName());
+							addr.setState(account.getBillingAddress().getState());
+							addr.setZipCode(account.getBillingAddress().getZipCode());
+							dto.setBillingAddress(addr);
+						}
+					}
+					response.setStatus(RequestStatus.OK);
+					response.setAccount(dto);					
+				} catch (AccountServiceException e) {
+					log.warn("Account creation failed: " + e.getMessage());
+					response.setStatus(RequestStatus.ERROR);
+					response.setMessage("Account creation failed: " + e.getMessage());				
 				}
-				response.setAccount(dto);
 			} else {
 				log.warn("Account with email " + request.getEmail() + " already exists.");
+				response.setStatus(RequestStatus.ERROR);
+				response.setMessage("Account with email " + request.getEmail() + " already exists.");				
 			}
 		} catch (AccountServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.setStatus(RequestStatus.ERROR);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}

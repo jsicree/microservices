@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>joe.micro</groupId>
 	<artifactId>reference-client-lib</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Reference Data Client Lib</name>
 	<properties>
 		<!-- Generic properties -->

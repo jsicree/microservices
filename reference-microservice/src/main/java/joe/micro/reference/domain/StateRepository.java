@@ -7,4 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface StateRepository extends CrudRepository<State, Long> {
 
 	public List<State> findByCountry(Country country);
+
+	public State findByCode(String code);
+
 }

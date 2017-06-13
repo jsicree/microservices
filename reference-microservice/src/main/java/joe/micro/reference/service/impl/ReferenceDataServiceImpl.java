@@ -56,4 +56,10 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		return stateList;
 	}
 
+	@Override
+	public State getStateByStateCode(String stateCode) throws ReferenceDataServiceException {
+
+		return stateRepo.findByCode(stateCode);
+	}
+
 }

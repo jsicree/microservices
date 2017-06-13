@@ -12,5 +12,8 @@ public interface ReferenceDataService {
 	public Country getCountryByCode(final String code) throws ReferenceDataServiceException;
 
 	public List<State> getStatesByCountryCode(String countryCode) throws ReferenceDataServiceException;
+	
+	public State getStateByStateCode(String stateCode) throws ReferenceDataServiceException;
 
+	
 }

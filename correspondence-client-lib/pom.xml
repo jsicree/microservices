@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>joe.micro</groupId>
-	<artifactId>account-client-lib</artifactId>
-	<version>0.0.1</version>
-	<name>Account Client Lib</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>joe.micro</groupId>
+  <artifactId>correspondence-client-lib</artifactId>
+  <version>0.0.1</version>
+  <name>Correspondence Client API</name>
 	<properties>
 		<!-- Generic properties -->
 		<java.version>1.8</java.version>
@@ -15,7 +14,7 @@
 		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
 	</properties>
 	<build>
-		<finalName>account-client-lib</finalName>
+		<finalName>correspondence-client-lib</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,5 +50,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
+	</build>  
 </project>

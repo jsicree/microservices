@@ -1,4 +1,4 @@
-package joe.micro.account;
+package joe.micro.correspondence;
 
 import javax.annotation.Resource;
 
@@ -13,13 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
-import joe.micro.account.service.AccountService;
-import joe.micro.account.service.WebCorrespondenceService;
-import joe.micro.account.service.WebReferenceService;
-import joe.micro.account.service.impl.AccountServiceImpl;
-import joe.micro.account.service.impl.WebCorrespondenceServiceImpl;
-import joe.micro.account.service.impl.WebReferenceServiceImpl;
-
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
@@ -28,33 +21,28 @@ import joe.micro.account.service.impl.WebReferenceServiceImpl;
 public class Application {
 
 	private static final String PROPERTY_NAME_REFERENCE_SERVICE_URL = "ref.service.url";
-	private static final String PROPERTY_NAME_CORRESPONDENCE_SERVICE_URL = "correspondence.service.url";
 
 	@Resource
 	private Environment environment;	
 	
-	@Bean
-    AccountService getAccountService() {
-    	return new AccountServiceImpl();
-    }
+//	@Bean
+//    AccountService getAccountService() {
+//    	return new AccountServiceImpl();
+//    }
 
-	@Bean
-    WebReferenceService getWebReferenceService() {
-    	return new WebReferenceServiceImpl(environment.getRequiredProperty(PROPERTY_NAME_REFERENCE_SERVICE_URL));
-    }
+//	@Bean
+//    WebReferenceService getWebReferenceService() {
+//    	return new WebReferenceServiceImpl(environment.getRequiredProperty(PROPERTY_NAME_REFERENCE_SERVICE_URL));
+//    }
 
-	@Bean
-    WebCorrespondenceService getWebCorrespondenceService() {
-    	return new WebCorrespondenceServiceImpl(environment.getRequiredProperty(PROPERTY_NAME_CORRESPONDENCE_SERVICE_URL));
-    }
-	
 	@LoadBalanced
 	@Bean
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}	
-    public static void main(String[] args) throws Exception {
-    	System.setProperty("spring.config.name", "accounts-server");
+
+	public static void main(String[] args) throws Exception {
+    	System.setProperty("spring.config.name", "correspondence-server");
         SpringApplication.run(Application.class, args);
     }
 	    	

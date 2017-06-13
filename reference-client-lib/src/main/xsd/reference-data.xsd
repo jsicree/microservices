@@ -13,6 +13,13 @@
 		</xs:appinfo>
 	</xs:annotation>
 
+	<xs:simpleType name="RequestStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK" />
+			<xs:enumeration value="ERROR" />
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="CountryDto">
 		<xs:sequence>
 			<xs:element name="id" type="xs:long" />
@@ -32,6 +39,8 @@
 	<xs:element name="CountryResponse">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="status" type="tns:RequestStatus" />
+				<xs:element name="message" type="xs:string" />			
 				<xs:element name="country" type="tns:CountryDto" />
 			</xs:sequence>
 		</xs:complexType>
@@ -40,6 +49,8 @@
 	<xs:element name="CountriesResponse">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="status" type="tns:RequestStatus" />
+				<xs:element name="message" type="xs:string" />
 				<xs:element name="countries" type="tns:CountryDto"
 					maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
@@ -67,6 +78,8 @@
 	<xs:element name="StateResponse">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="status" type="tns:RequestStatus" />
+				<xs:element name="message" type="xs:string" />
 				<xs:element name="state" type="tns:StateDto" />
 			</xs:sequence>
 		</xs:complexType>
@@ -83,6 +96,8 @@
 	<xs:element name="StatesByCountryResponse">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="status" type="tns:RequestStatus" />
+				<xs:element name="message" type="xs:string" />
 				<xs:element name="states" type="tns:StateDto"
 					maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
